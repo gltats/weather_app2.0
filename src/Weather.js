@@ -75,17 +75,17 @@ function Weather() {
     }
   }
 
-  async function getCoordinates(cityName) {
-    try {
-      const response = await axios.get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${geocodeKey}`
-      );
-      const { lat, lng } = response.data.results[0].geometry;
-      getTimezone(lat, lng);
-    } catch (error) {
-      console.error("Error fetching coordinates:", error);
-    }
-  }
+  const getCoordinates = useCallback(async (cityName) => {
+	try {
+	  const response = await axios.get(
+		`https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${geocodeKey}`
+	  );
+	  const { lat, lng } = response.data.results[0].geometry;
+	  getTimezone(lat, lng);
+	} catch (error) {
+	  console.error("Error fetching coordinates:", error);
+	}
+  }, [getTimezone]); 
 
   // Fetch timezone using coordinates
   async function getTimezone(lat, lng) {
