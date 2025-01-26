@@ -102,7 +102,7 @@ function Weather() {
 
   useEffect(() => {
     getData("Wolfsburg");
-  }, [getData]);
+  }, []);
 
   useEffect(() => {
     if (timezone) {
