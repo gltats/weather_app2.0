@@ -50,7 +50,6 @@ function Weather() {
         setWind(Math.round(response.data.wind.speed));
         setIcon(response.data.condition.icon_url);
         setError("");
-        // Fetch coordinates after getting weather data
         getCoordinates(cityName);
       } else {
         setError("City not found. Please enter a valid city.");
@@ -75,7 +74,6 @@ function Weather() {
     }
   }
 
-  // Fetch coordinates for the city
   async function getCoordinates(cityName) {
     try {
       const response = await axios.get(
@@ -104,7 +102,7 @@ function Weather() {
 
   useEffect(() => {
     getData("Wolfsburg");
-  }, []); // Fetch weather data and coordinates when component mounts
+  }, []);
 
   useEffect(() => {
     if (timezone) {
@@ -112,9 +110,9 @@ function Weather() {
         setDate(moment().tz(timezone).format("dddd Do of MMMM YYYY, HH:mm:ss"));
       }, 1000);
 
-      return () => clearInterval(interval); // Clean up interval on component unmount
+      return () => clearInterval(interval);
     }
-  }, [timezone]); // Update date every second based on the timezone
+  }, [timezone]);
 
   return (
     <div className="Weather">
