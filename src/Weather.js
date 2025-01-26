@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./Weather.css";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -36,8 +36,7 @@ function Weather() {
     }
   }
 
-   // Memoize getData to avoid unnecessary re-creation
-   const getData = useCallback(async (cityName) => {
+  async function getData(cityName) {
     const url = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${key}`;
 
     try {
@@ -59,7 +58,7 @@ function Weather() {
       setError("Something went wrong. Please try again.");
       console.error(error);
     }
-  }, []);
+  }
 
   function handleSearch() {
     if (searchInput.trim() === "") {
@@ -75,17 +74,17 @@ function Weather() {
     }
   }
 
-  const getCoordinates = useCallback(async (cityName) => {
-	try {
-	  const response = await axios.get(
-		`https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${geocodeKey}`
-	  );
-	  const { lat, lng } = response.data.results[0].geometry;
-	  getTimezone(lat, lng);
-	} catch (error) {
-	  console.error("Error fetching coordinates:", error);
-	}
-  }, [getTimezone]); 
+  async function getCoordinates(cityName) {
+    try {
+      const response = await axios.get(
+        `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${geocodeKey}`
+      );
+      const { lat, lng } = response.data.results[0].geometry;
+      getTimezone(lat, lng);
+    } catch (error) {
+      console.error("Error fetching coordinates:", error);
+    }
+  }
 
   // Fetch timezone using coordinates
   async function getTimezone(lat, lng) {
@@ -102,8 +101,12 @@ function Weather() {
   }
 
   useEffect(() => {
-    getData("Wolfsburg");
-  }, [getData]);
+	const fetchData = async () => {
+	  await getData("Wolfsburg");
+	};
+  
+	fetchData();// eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (timezone) {
