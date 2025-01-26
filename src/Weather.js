@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Weather.css";
 import axios from "axios";
 import moment from "moment-timezone";
+import Forecast from "./Forecast.js";
 
 let key = "58f070a40818f233c2b84bto089b72e4";
 
@@ -39,7 +40,7 @@ function Weather() {
       const response = await axios.get(url);
 
       if (response.data && response.data.status !== "not_found") {
-        console.log(response.data); 
+        //console.log(response.data); 
         setCity(response.data.city);
         setTemperature(Math.round(response.data.temperature.current));
         setWeather(response.data.condition.description);
@@ -108,11 +109,11 @@ function Weather() {
           <div className="row m-2">
             <div className="col">
               <img src={icon} alt="weather icon" />
-              <p className="card-text">
+              <p className="card-text"> </p>
                 {temperature} <div className="btn btn-light" id="grades" onClick={toggleTemperatureUnit}>
                   °{unit}
                 </div>
-              </p>
+             
             </div>
             <div className="col mt-4">
               <p className="card-text">
@@ -124,7 +125,9 @@ function Weather() {
             </div>
           </div>
         </div>
+		<Forecast city={city}/>
       </div>
+	  
     </div>
   );
 }
