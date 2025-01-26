@@ -5,10 +5,13 @@ import moment from "moment-timezone";
 import Forecast from "./Forecast.js";
 
 let key = "58f070a40818f233c2b84bto089b72e4";
+let geocodeKey = "c338d3cee1e64c8fabea67b04fa9fa45"; // OpenCage Geocoding API Key
+let timezoneKey = "Y4U5DTNOVEYF"; // TimeZoneDB API Key
 
 function Weather() {
-  const [date, setDate] = useState(moment().tz("Europe/Berlin").format("dddd Do of MMMM YYYY, HH:mm:ss"));
-  const [city, setCity] = useState("Berlin");
+  const [city, setCity] = useState("Wolfsburg");
+  const [timezone, setTimezone] = useState("");
+  const [date, setDate] = useState(moment().format("dddd Do of MMMM YYYY, HH:mm:ss"));
   const [searchInput, setSearchInput] = useState("");
   const [error, setError] = useState("");
   const [temperature, setTemperature] = useState("loading...");
@@ -40,20 +43,21 @@ function Weather() {
       const response = await axios.get(url);
 
       if (response.data && response.data.status !== "not_found") {
-        //console.log(response.data); 
         setCity(response.data.city);
         setTemperature(Math.round(response.data.temperature.current));
         setWeather(response.data.condition.description);
         setHumidity(response.data.temperature.humidity);
         setWind(Math.round(response.data.wind.speed));
-		setIcon(response.data.condition.icon_url);
-        setError(""); 
+        setIcon(response.data.condition.icon_url);
+        setError("");
+        // Fetch coordinates after getting weather data
+        getCoordinates(cityName);
       } else {
         setError("City not found. Please enter a valid city.");
       }
     } catch (error) {
       setError("Something went wrong. Please try again.");
-      console.error(error); 
+      console.error(error);
     }
   }
 
@@ -71,14 +75,46 @@ function Weather() {
     }
   }
 
-  useEffect(() => {
-    getData("Berlin");
-    const interval = setInterval(() => {
-      setDate(moment().tz("Europe/Berlin").format("dddd Do of MMMM YYYY, HH:mm:ss"));
-    }, 1000);
+  // Fetch coordinates for the city
+  async function getCoordinates(cityName) {
+    try {
+      const response = await axios.get(
+        `https://api.opencagedata.com/geocode/v1/json?q=${cityName}&key=${geocodeKey}`
+      );
+      const { lat, lng } = response.data.results[0].geometry;
+      getTimezone(lat, lng);
+    } catch (error) {
+      console.error("Error fetching coordinates:", error);
+    }
+  }
 
-    return () => clearInterval(interval);
-  }, []);
+  // Fetch timezone using coordinates
+  async function getTimezone(lat, lng) {
+    try {
+      const response = await axios.get(
+        `http://api.timezonedb.com/v2.1/get-time-zone?key=${timezoneKey}&format=json&by=position&lat=${lat}&lng=${lng}`
+      );
+      const timezoneData = response.data.zoneName;
+      setTimezone(timezoneData);
+      setDate(moment().tz(timezoneData).format("dddd Do of MMMM YYYY, HH:mm:ss"));
+    } catch (error) {
+      console.error("Error fetching timezone:", error);
+    }
+  }
+
+  useEffect(() => {
+    getData("Wolfsburg");
+  }, []); // Fetch weather data and coordinates when component mounts
+
+  useEffect(() => {
+    if (timezone) {
+      const interval = setInterval(() => {
+        setDate(moment().tz(timezone).format("dddd Do of MMMM YYYY, HH:mm:ss"));
+      }, 1000);
+
+      return () => clearInterval(interval); // Clean up interval on component unmount
+    }
+  }, [timezone]); // Update date every second based on the timezone
 
   return (
     <div className="Weather">
@@ -96,7 +132,7 @@ function Weather() {
             id="search"
           />
           <button className="btn btn-light searchButton" id="search" type="button" onClick={handleSearch}>
-		 	 <i class="bi bi-search"></i>
+            <i className="bi bi-search"></i>
           </button>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -110,10 +146,9 @@ function Weather() {
             <div className="col">
               <img src={icon} alt="weather icon" />
               <p className="card-text"> </p>
-                {temperature} <div className="btn btn-light" id="grades" onClick={toggleTemperatureUnit}>
-                  °{unit}
-                </div>
-             
+              {temperature} <div className="btn btn-light" id="grades" onClick={toggleTemperatureUnit}>
+                °{unit}
+              </div>
             </div>
             <div className="col mt-4">
               <p className="card-text">
@@ -125,9 +160,8 @@ function Weather() {
             </div>
           </div>
         </div>
-		<Forecast city={city} unit={unit} toggleTemperatureUnit={toggleTemperatureUnit}/>
+        <Forecast city={city} unit={unit} toggleTemperatureUnit={toggleTemperatureUnit} />
       </div>
-	  
     </div>
   );
 }
