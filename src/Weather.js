@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Weather.css";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -36,7 +36,8 @@ function Weather() {
     }
   }
 
-  async function getData(cityName) {
+   // Memoize getData to avoid unnecessary re-creation
+   const getData = useCallback(async (cityName) => {
     const url = `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${key}`;
 
     try {
@@ -58,7 +59,7 @@ function Weather() {
       setError("Something went wrong. Please try again.");
       console.error(error);
     }
-  }
+  }, []);
 
   function handleSearch() {
     if (searchInput.trim() === "") {
@@ -102,7 +103,7 @@ function Weather() {
 
   useEffect(() => {
     getData("Wolfsburg");
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     if (timezone) {
