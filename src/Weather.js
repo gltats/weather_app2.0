@@ -102,7 +102,7 @@ function Weather() {
 
   useEffect(() => {
     getData("Wolfsburg");
-  }, []);
+  }, [getData]);
 
   useEffect(() => {
     if (timezone) {
@@ -112,7 +112,7 @@ function Weather() {
 
       return () => clearInterval(interval);
     }
-  }, [timezone][getData]);
+  }, [timezone]);
 
   return (
     <div className="Weather">
