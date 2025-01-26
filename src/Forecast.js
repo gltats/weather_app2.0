@@ -34,7 +34,7 @@ function Forecast({ city, unit }) {
 
 	const convertTemperature = (temperature) => {
 		return unit === "F"
-			? (<>{Math.round(temperature)}<small> °F </small></>)
+			? (<>{Math.round(temperature  * 1.8 + 32)}<small> °F </small></>)
 			: (<>{Math.round(temperature)}<small> °C </small></>);
 	};
 
