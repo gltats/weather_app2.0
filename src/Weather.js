@@ -109,13 +109,14 @@ function Weather() {
   }, []);
 
   useEffect(() => {
-    if (timezone) {
-      const interval = setInterval(() => {
-        setDate(moment().tz(timezone).format("dddd Do of MMMM YYYY, HH:mm:ss"));
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
+	if (timezone) {
+	  const updateDate = () => {
+		setDate(moment().tz(timezone).format("dddd Do of MMMM YYYY, HH:mm:ss"));
+	  };
+	  updateDate();
+	  const interval = setInterval(updateDate, 1000);
+	  return () => clearInterval(interval);
+	}
   }, [timezone]);
 
   return (
