@@ -90,7 +90,7 @@ function Weather() {
   async function getTimezone(lat, lng) {
     try {
       const response = await axios.get(
-        `http://api.timezonedb.com/v2.1/get-time-zone?key=${timezoneKey}&format=json&by=position&lat=${lat}&lng=${lng}`
+        `https://api.timezonedb.com/v2.1/get-time-zone?key=${timezoneKey}&format=json&by=position&lat=${lat}&lng=${lng}`
       );
       const timezoneData = response.data.zoneName;
       setTimezone(timezoneData);
