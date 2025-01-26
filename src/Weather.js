@@ -112,7 +112,7 @@ function Weather() {
 
       return () => clearInterval(interval);
     }
-  }, [timezone]);
+  }, [timezone][getData]);
 
   return (
     <div className="Weather">
