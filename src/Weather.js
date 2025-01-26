@@ -125,7 +125,7 @@ function Weather() {
             </div>
           </div>
         </div>
-		<Forecast city={city}/>
+		<Forecast city={city} unit={unit} toggleTemperatureUnit={toggleTemperatureUnit}/>
       </div>
 	  
     </div>
