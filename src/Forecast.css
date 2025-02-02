@@ -1,0 +1,29 @@
+.Forecast {
+	padding: 1rem;
+	color: #808080;
+}
+
+.Forecast p {
+	font-size: 1em;
+}
+
+.grades-forecast {
+	font: 0.9em sans-serif;
+	align-items: center;
+}
+
+@media (max-width: 768px) {
+	.Forecast {
+		padding: 0.5rem;
+	}
+
+	.Forecast p {
+		font-size: 0.9em;
+	}
+
+	.grades-forecast {
+		font: 0.8em sans-serif;
+	}
+	
+}
+

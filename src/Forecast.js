@@ -45,13 +45,13 @@ function Forecast({ city, unit }) {
 			<div className="row">
 				{forecastData.slice(0, 5).map((day, index) => (
 					<div className="col" key={index}>
-						<p style={{ marginBottom: "0", color:"#808080" }} >{dates[index]?.date}</p>
+						<p>{dates[index]?.date}</p>
 						<img	
 								style={{ width: "60px", marginTop: "0" }}
 								src={day.condition.icon_url}
 								alt={day.condition.description}
 						/>
-						<div className="mb-4">
+						<div className="mb-4 grades-forecast">
 							{convertTemperature(day.temperature.minimum)}/{" "}{convertTemperature(day.temperature.maximum)}
 						</div>
 					</div>

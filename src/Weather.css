@@ -1,5 +1,298 @@
-.input-group
-{
+.Weather {
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 20px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+	padding: 2rem;
+	max-width: 600px;
+	width: 100%;
+	margin: 2rem;
+	backdrop-filter: blur(10px);
+	animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+h1 {
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: #2c3e50;
+	margin-bottom: 0.5rem;
+	text-align: center;
+}
+
+p {
+	font-size: 1.1rem;
+	color: #666;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.input-group {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1.5rem;
 	padding-right: 3%;
 }
 
+.form-control:focus {
+	border-color: #a4c7df !important;
+	outline: none !important;
+}
+
+.searchButton {
+	cursor: pointer !important;
+}
+
+.searchButton i {
+	color: rgba(107, 107, 112, 0.684);
+	font-size: 1.2rem;
+}
+
+.error {
+	color: #e74c3c;
+	text-align: center;
+	margin-bottom: 1rem;
+	font-weight: 500;
+}
+
+.card-body {
+	text-align: center;
+}
+
+#CityName {
+	font-size: 2rem;
+	font-weight: 700;
+	color: #2c3e50;
+}
+
+#Date {
+	font-size: 1.1rem;
+	color: #666;
+}
+
+.temperature {
+	font-size: 3rem;
+	font-weight: 700;
+	color: #2c3e50;
+	margin-bottom: 1rem;
+}
+
+#grades {
+	cursor: pointer;
+}
+
+.Loader {
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 3rem;
+}
+
+.Loader h3 {
+	font-size: 1.5rem;
+	color: #2c3e50;
+	text-align: center;
+}
+
+.flower-spinner {
+	height: 60px;
+	position: relative;
+	animation: rotate 2s linear infinite;
+}
+
+.flower-spinner .petal {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform-origin: center;
+}
+
+.flower-spinner .petal::before {
+	content: "";
+	display: block;
+	width: 15px;
+	height: 30px;
+	background: #3498db;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.flower-spinner .petal:nth-child(1) {
+	transform: rotate(0deg);
+}
+
+.flower-spinner .petal:nth-child(2) {
+	transform: rotate(45deg);
+}
+
+.flower-spinner .petal:nth-child(3) {
+	transform: rotate(90deg);
+}
+
+.flower-spinner .petal:nth-child(4) {
+	transform: rotate(135deg);
+}
+
+.flower-spinner .petal:nth-child(5) {
+	transform: rotate(180deg);
+}
+
+.flower-spinner .petal:nth-child(6) {
+	transform: rotate(225deg);
+}
+
+.flower-spinner .petal:nth-child(7) {
+	transform: rotate(270deg);
+}
+
+.flower-spinner .petal:nth-child(8) {
+	transform: rotate(315deg);
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
+.weather-background.sunny {
+	background: linear-gradient(135deg, #f8ad3d, #FFEC94);
+	animation: sunnyAnimation 60s linear infinite;
+  }
+  
+  @keyframes sunnyAnimation {
+	0% {
+	  background-position: 0% 50%;
+	}
+	50% {
+	  background-position: 100% 50%;
+	}
+	100% {
+	  background-position: 0% 50%;
+	}
+  }
+  
+  .weather-background.few-clouds {
+	background: linear-gradient(135deg, #B0C4DE, #D3D3D3);
+	animation: moveClouds 60s linear infinite;
+  }
+  
+  .weather-background.scattered-clouds {
+	background: linear-gradient(135deg, #C0C0C0, #DCDCDC);
+	animation: moveClouds 60s linear infinite;
+  }
+  
+  .weather-background.broken-clouds {
+	background: linear-gradient(135deg, #A9A9A9, #C0C0C0);
+	animation: moveClouds 60s linear infinite;
+  }
+  
+  @keyframes moveClouds {
+	0% {
+	  background-position: 0% 50%;
+	}
+	100% {
+	  background-position: 100% 50%;
+	}
+  }
+  
+  
+  .weather-background.shower-rain {
+	background: linear-gradient(135deg, #2F4F4F, #708090);
+	animation: rain 1s linear infinite;
+  }
+  
+  .weather-background.rain {
+	background: linear-gradient(135deg, #4B79A1, #283E51);
+	animation: rain 1s linear infinite;
+  }
+  
+  @keyframes rain {
+	0% {
+	  background-position: 0% 0%;
+	}
+	100% {
+	  background-position: 50% 100%;
+	}
+  }
+  
+  .weather-background.snow {
+	background: linear-gradient(135deg, #E0F7FA, #B3E5FC);
+	animation: snow 5s linear infinite;
+  }
+  
+  @keyframes snow {
+	0% {
+	  background-position: 0% 0%;
+	}
+	100% {
+	  background-position: 100% 100%;
+	}
+  }
+  
+  .weather-background.stormy {
+	background: linear-gradient(135deg, #232526, #414345);
+	animation: lightning 5s linear infinite;
+  }
+  
+  @keyframes lightning {
+	0%, 100% {
+	  opacity: 1;
+	}
+	50% {
+	  opacity: 0.5;
+	}
+  }
+  
+  .weather-background.mist {
+	background: linear-gradient(135deg, #D7D2CC, #304352);
+	animation: mist 5s linear infinite;
+  }
+  
+  @keyframes mist {
+	0% {
+	  background-position: 0% 0%;
+	}
+	100% {
+	  background-position: 100% 100%;
+	}
+  }
+  
+
+@media (max-width: 768px) {
+	.Weather {
+		padding: 1.5rem;
+		margin: 1rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+	}
+
+	.form-control {
+		width: 60%;
+	}
+
+	.temperature {
+		font-size: 2.5rem;
+	}
+}
